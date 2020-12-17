@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import api from '../services/todos.js'
+import datetime from '../libs/setdatetime'
 
 const storeData = {
   state: {
@@ -11,23 +12,48 @@ const storeData = {
   actions: {
     async gettodoRequest({ commit }) {
       try {
-        console.log('hello')
-        const result = await api.getTodo('ddd',)
+        const result = await api.getTodo()
         commit('SET_TODOS', result)
       } catch (error) {
         console.log(error)
       }
     },
-    delTask({ commit }, id) {
-      commit('DELETE_TODO', id)
+    async puttodoRequest({ commit }, data) {
+      
+      const putdata = {id:data[0],create_time:datetime,task:data[1], edit:false}
+      // commit ('PUT_TODO', data)
+      try {
+        const result = await api.putTodo(data[0],putdata)
+        commit('PUT_TODOS', result)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async deletetodoRequest({ commit }, id) {
+      try {
+        const result = await api.deleteTodo(id)
+        commit('DELETE_TODO', result)
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
   mutations: {
     SET_TODOS(state, data) {
       state.todos = data
     },
-    DELETE_TODO(state, id) {
-      state.todos = state.todos.filter((todo) => todo.id !== id)
+    PUT_TODOS(state, data){
+      state.todos.map(todo => {
+        if (todo.id === data.id) {
+          todo.task = data.task
+          todo.completed = data.completed
+          todo.edit = data.edit
+          todo.create_time = data.create_time
+        }
+      })
+    },
+    DELETE_TODO(state, data) {
+      state.todos = state.todos.filter((todo) => todo.id !== data.id)
     },
   },
   modules: {

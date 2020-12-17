@@ -10,12 +10,12 @@
                   
                   <div class="modified">
                       <img src="../assets/edit.png" alt="" @click="todo.edit = !todo.edit" v-if="!todo.edit">
-                      <img src="../assets/checked.png" alt="" @click="todo.edit = !todo.edit" v-else>
-                      <img src="../assets/delete.png" alt="" @click="delTask(todo.id)" >
+                      <img src="../assets/checked.png" alt="" @click="todo.edit = !todo.edit,puttodoRequest([todo.id, todo.task])" v-else>
+                      <img src="../assets/delete.png" alt="" @click="deletetodoRequest(todo.id)" >
                   </div>
               </div>
               <p v-if="!todo.edit" @click="todo.edit = !todo.edit">{{todo.task}}</p>
-              <input v-else class="form-control" type="textarea" v-model="todo.task">
+              <input v-else class="form-control" type="textarea" v-model="todo.task" @keyup.enter="puttodoRequest([todo.id, todo.task])">
           </li>
       </ul>
   </div>
@@ -28,20 +28,8 @@ export default {
     computed:{
         ...mapState(['todos'])
     },
-    // data() {
-    //     return {
-    //         todos: [
-    //             {id: 1, create_time: '13:10 PM - 15/08/2020', task: 'công việc 1', completed: true, edit: false},
-    //             {id: 2, create_time: '13:11 PM - 15/08/2020', task: 'công việc 2', completed: true, edit: false}
-    //         ],
-    //     }
-    // },
-
     methods: {
-        // delTask(id){
-        //     return this.todos = this.todos.filter(todo => todo.id !== id)
-        // },
-        ...mapActions(['gettodoRequest','delTask'])
+        ...mapActions(['gettodoRequest','delTask','puttodoRequest','deletetodoRequest'])
     },
       mounted() {
     this.gettodoRequest()
