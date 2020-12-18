@@ -1,10 +1,21 @@
 <template>
   <div class="event">
-    <ul class="event-list" v-for="todo in todos" :key="todo.id">
+    <ul
+      class="event-list"
+      v-for="todo in todos"
+      :key="todo.id"
+      :class="{ completed: todo.completed }"
+    >
       <li>
         <div class="event-click">
           <div class="check">
-            <input class="inb" type="checkbox" />
+            <input
+              class="inb"
+              type="checkbox"
+              :checked="todo.completed"
+              @click="todo.completed = !todo.completed"
+              @change="completeRequest([todo.id, todo.completed])"
+            />
             <p>{{ todo.create_time }}</p>
           </div>
 
@@ -56,7 +67,8 @@ export default {
       'gettodoRequest',
       'delTask',
       'puttodoRequest',
-      'deletetodoRequest'
+      'deletetodoRequest',
+      'completeRequest'
     ])
   },
   mounted() {
@@ -73,6 +85,9 @@ export default {
   padding: 10px;
   background-color: white;
   margin-top: 15px;
+}
+.completed {
+  background-color: rgba(146, 226, 126, 0.234);
 }
 .event-list li {
   list-style: none;

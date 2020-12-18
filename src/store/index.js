@@ -5,8 +5,8 @@ import datetime from '../libs/setdatetime'
 const storeData = {
   state: {
     todos: [
-        // {id: 1, create_time: '13:10 PM - 15/08/2020', task: 'công việc 1', completed: true, edit: false},
-        // {id: 2, create_time: '13:11 PM - 15/08/2020', task: 'công việc 2', completed: true, edit: false}
+      // {id: 1, create_time: '13:10 PM - 15/08/2020', task: 'công việc 1', completed: true, edit: false},
+      // {id: 2, create_time: '13:11 PM - 15/08/2020', task: 'công việc 2', completed: true, edit: false}
     ]
   },
   actions: {
@@ -19,11 +19,14 @@ const storeData = {
       }
     },
     async puttodoRequest({ commit }, data) {
-      
-      const putdata = {id:data[0],create_time:datetime,task:data[1], edit:false}
-      // commit ('PUT_TODO', data)
+      const putdata = {
+        id: data[0],
+        create_time: datetime,
+        task: data[1],
+        edit: false
+      }
       try {
-        const result = await api.putTodo(data[0],putdata)
+        const result = await api.putTodo(data[0], putdata)
         commit('PUT_TODOS', result)
       } catch (error) {
         console.log(error)
@@ -37,13 +40,25 @@ const storeData = {
         console.log(error)
       }
     },
+    async completeRequest({ commit }, data) {
+      console.log('data[1]', data[1])
+      const putdata = {
+        completed: data[1]
+      }
+      try {
+        const result = await api.putTodo(data[0], putdata)
+        commit('PUT_TODOS', result)
+      } catch (error) {
+        console.log(error)
+      }
+    }
   },
   mutations: {
     SET_TODOS(state, data) {
       state.todos = data
     },
-    PUT_TODOS(state, data){
-      state.todos.map(todo => {
+    PUT_TODOS(state, data) {
+      state.todos.map((todo) => {
         if (todo.id === data.id) {
           todo.task = data.task
           todo.completed = data.completed
@@ -54,10 +69,9 @@ const storeData = {
     },
     DELETE_TODO(state, data) {
       state.todos = state.todos.filter((todo) => todo.id !== data.id)
-    },
+    }
   },
-  modules: {
-  }
+  modules: {}
 }
 const store = createStore(storeData)
 export default store
