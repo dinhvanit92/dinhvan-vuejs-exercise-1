@@ -42,4 +42,10 @@ export default {
   padding-left: 10px;
   border: 1px solid rgba(51, 51, 51, 0.131);
 }
+input {
+  border: 1px solid rgba(51, 51, 51, 0.131);
+}
+input:focus {
+  outline: rgb(255, 1, 5);
+}
 </style>
