@@ -4,10 +4,7 @@ import datetime from '../libs/setdatetime'
 
 const storeData = {
   state: {
-    todos: [
-      // {id: 1, create_time: '13:10 PM - 15/08/2020', task: 'công việc 1', completed: true, edit: false},
-      // {id: 2, create_time: '13:11 PM - 15/08/2020', task: 'công việc 2', completed: true, edit: false}
-    ]
+    todos: []
   },
   actions: {
     async gettodoRequest({ commit }) {
@@ -51,11 +48,28 @@ const storeData = {
       } catch (error) {
         console.log(error)
       }
+    },
+    async addtaskRequest({ commit }, data) {
+      const addData = {
+        task: data,
+        create_time: datetime,
+        completed: false,
+        edit: false
+      }
+      try {
+        const result = await api.postTodo(addData)
+        commit('POST_TODOS', result)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mutations: {
     SET_TODOS(state, data) {
       state.todos = data
+    },
+    POST_TODOS(state, data) {
+      state.todos.push(data)
     },
     PUT_TODOS(state, data) {
       state.todos.map((todo) => {
