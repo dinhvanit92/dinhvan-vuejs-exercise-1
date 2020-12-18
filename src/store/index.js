@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import api from '../services/todos.js'
-import datetime from '../libs/setdatetime'
+import callTime from '../libs/setdatetime'
 
 const storeData = {
   state: {
@@ -16,9 +16,10 @@ const storeData = {
       }
     },
     async puttodoRequest({ commit }, data) {
+      const liveDate = callTime.datetime()
       const putdata = {
         id: data[0],
-        create_time: datetime,
+        create_time: liveDate,
         task: data[1],
         edit: false
       }
@@ -50,9 +51,10 @@ const storeData = {
       }
     },
     async addtaskRequest({ commit }, data) {
+      const liveDate = callTime.datetime()
       const addData = {
         task: data,
-        create_time: datetime,
+        create_time: liveDate,
         completed: false,
         edit: false
       }
