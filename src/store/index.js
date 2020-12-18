@@ -25,7 +25,6 @@ const storeData = {
         task: data[1],
         edit: false
       }
-      // commit ('PUT_TODO', data)
       try {
         const result = await api.putTodo(data[0], putdata)
         commit('PUT_TODOS', result)
@@ -41,16 +40,14 @@ const storeData = {
         console.log(error)
       }
     },
-    async addtaskRequest({ commit }, data) {
-      const addData = {
-        task: data,
-        create_time: datetime,
-        completed: false,
-        edit: false
+    async completeRequest({ commit }, data) {
+      console.log('data[1]', data[1])
+      const putdata = {
+        completed: data[1]
       }
       try {
-        const result = await api.postTodo(addData)
-        commit('POST_TODOS', result)
+        const result = await api.putTodo(data[0], putdata)
+        commit('PUT_TODOS', result)
       } catch (error) {
         console.log(error)
       }
@@ -59,9 +56,6 @@ const storeData = {
   mutations: {
     SET_TODOS(state, data) {
       state.todos = data
-    },
-    POST_TODOS(state, data) {
-      state.todos.push(data)
     },
     PUT_TODOS(state, data) {
       state.todos.map((todo) => {
