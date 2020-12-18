@@ -135,9 +135,9 @@ export default {
   background-color: white;
   margin-top: 15px;
 }
-.completed {
+/* .completed {
   background-color: rgba(146, 226, 126, 0.234);
-}
+} */
 .event-list li {
   list-style: none;
 }
@@ -170,7 +170,10 @@ export default {
   font-size: 15px;
 }
 input:focus {
-  outline: none;
+  border: 1px solid rgb(7, 175, 253);
+}
+input:hover {
+  border: 1px solid rgb(7, 175, 253);
 }
 
 .event-show {
