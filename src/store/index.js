@@ -51,11 +51,28 @@ const storeData = {
       } catch (error) {
         console.log(error)
       }
+    },
+    async addtaskRequest({ commit }, data) {
+      const addData = {
+        task: data,
+        create_time: datetime,
+        completed: false,
+        edit: false
+      }
+      try {
+        const result = await api.postTodo(addData)
+        commit('POST_TODOS', result)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mutations: {
     SET_TODOS(state, data) {
       state.todos = data
+    },
+    POST_TODOS(state, data) {
+      state.todos.push(data)
     },
     PUT_TODOS(state, data) {
       state.todos.map((todo) => {
