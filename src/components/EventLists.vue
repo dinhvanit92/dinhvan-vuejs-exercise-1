@@ -1,8 +1,15 @@
 <template>
+  <div class="event-show">
+    <ul>
+      <li @click="check((listcheck = 1))">All</li>
+      <li @click="check((listcheck = 2))">Uncompleted</li>
+      <li @click="check((listcheck = 3))">Completed</li>
+    </ul>
+  </div>
   <div class="event">
     <ul
       class="event-list"
-      v-for="todo in todos"
+      v-for="todo in newtodos"
       :key="todo.id"
       :class="{ completed: todo.completed }"
     >
@@ -53,14 +60,43 @@
       </li>
     </ul>
   </div>
+  <div class="checkmark">
+    <div class="addcheck">
+      <input
+        type="checkbox"
+        id="checkall"
+        @click="checkAll((check = true))"
+        :disabled="check"
+      /><label for="checkall" class="texclass">Mark all as completed</label>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'EventLists',
+  data() {
+    return {
+      listcheck: 1
+    }
+  },
   computed: {
-    ...mapState(['todos'])
+    newtodos() {
+      let newdata
+      if (this.listcheck == 1) {
+        newdata = this.$store.state.todos
+      } else if (this.listcheck == 2) {
+        newdata = this.$store.state.todos.filter(
+          (todo) => todo.completed == false
+        )
+      } else {
+        newdata = this.$store.state.todos.filter(
+          (todo) => todo.completed == true
+        )
+      }
+      return newdata
+    }
   },
   methods: {
     ...mapActions([
@@ -68,8 +104,21 @@ export default {
       'delTask',
       'puttodoRequest',
       'deletetodoRequest',
-      'completeRequest'
+      'completeRequest',
+      'checkAll'
     ])
+    // check(data) {
+    //   let newdata = this.$store.state.todos
+    //   console.log(data)
+    //   if (data == 1) {
+    //     newdata = newdata.map((todo) => todo.id)
+    //   } else if (data == 2) {
+    //     newdata = newdata.map((todo) => todo.completed == false)
+    //   } else {
+    //     newdata = newdata.map((todo) => todo.completed == true)
+    //   }
+    //   return newdata
+    // }
   },
   mounted() {
     this.gettodoRequest()
@@ -122,5 +171,38 @@ export default {
 }
 input:focus {
   outline: none;
+}
+
+.event-show {
+  position: relative;
+  width: 80%;
+  height: 30px;
+  margin: auto;
+}
+.event-show ul {
+  display: flex;
+  list-style: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.event-show ul li {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-right: 1px solid rgba(119, 116, 116, 0.234);
+}
+.checkmark {
+  width: 80%;
+  margin: auto;
+  position: relative;
+}
+.addcheck {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 10px;
+}
+.texclass {
+  margin: 0px 10px;
 }
 </style>

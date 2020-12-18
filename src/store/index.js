@@ -6,6 +6,12 @@ const storeData = {
   state: {
     todos: []
   },
+  // getters: {
+  //   all: (state) => state.todos.filter((todo) => todo.id),
+  //   completed: (state) => state.todos.filter((todo) => todo.completed == true),
+  //   uncompleted: (state) =>
+  //     state.todos.filter((todo) => todo.completed == false)
+  // },
   actions: {
     async gettodoRequest({ commit }) {
       try {
@@ -62,6 +68,9 @@ const storeData = {
       } catch (error) {
         console.log(error)
       }
+    },
+    checkAll({ commit }, data) {
+      commit('CHECK_ALL', data)
     }
   },
   mutations: {
@@ -83,6 +92,13 @@ const storeData = {
     },
     DELETE_TODO(state, data) {
       state.todos = state.todos.filter((todo) => todo.id !== data.id)
+    },
+    CHECK_ALL(state, data) {
+      if (data) {
+        state.todos.map((todo) => {
+          todo.completed = true
+        })
+      }
     }
   },
   modules: {}
