@@ -6,6 +6,7 @@ async function getTodo() {
   )
   return result.data
 }
+//PUT TODOS LIST
 async function putTodo(id, data) {
   const result = await axios.put(
     'https://5fd988e77e05f000170d3a94.mockapi.io/todos/' + id,
@@ -13,12 +14,14 @@ async function putTodo(id, data) {
   )
   return result.data
 }
+//DELETE TODOS LIST
 async function deleteTodo(id) {
   const result = await axios.delete(
     'https://5fd988e77e05f000170d3a94.mockapi.io/todos/' + id
   )
   return result.data
 }
+//POST TODOS LIST
 async function postTodo(data) {
   const result = await axios.post(
     'https://5fd988e77e05f000170d3a94.mockapi.io/todos',

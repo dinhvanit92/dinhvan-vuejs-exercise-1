@@ -1,9 +1,9 @@
 <template>
   <div class="event-show">
     <ul>
-      <li @click="check((listcheck = 1))">All</li>
-      <li @click="check((listcheck = 2))">Uncompleted</li>
-      <li @click="check((listcheck = 3))">Completed</li>
+      <li @click="listcheck = 1">All</li>
+      <li @click="listcheck = 2">Uncompleted</li>
+      <li @click="listcheck = 3">Completed</li>
     </ul>
   </div>
   <div class="event">
@@ -71,6 +71,9 @@
         @click="checkAll((check = true))"
         :disabled="check"
       /><label for="checkall" class="texclass">Mark all as completed</label>
+      <button class="btnDel" v-if="check && newtodos.length" @click="delAllTask()">
+        DELETE COMPLETED ({{ newtodos.length }})
+      </button>
     </div>
   </div>
 </template>
@@ -81,7 +84,8 @@ export default {
   name: 'EventLists',
   data() {
     return {
-      listcheck: 1
+      listcheck: 1,
+      check: false
     }
   },
   computed: {
@@ -108,7 +112,8 @@ export default {
       'puttodoRequest',
       'deletetodoRequest',
       'completeRequest',
-      'checkAll'
+      'checkAll',
+      'delAllTask'
     ])
   },
   mounted() {
@@ -194,9 +199,19 @@ input:hover {
   position: absolute;
   top: 0px;
   right: 0px;
-  margin: 10px;
+  margin-top: 30px;
+  padding-bottom: 30px;
 }
 .texclass {
   margin: 0px 10px;
+}
+.btnDel {
+  background-color: #4482ff;
+  width: 200px;
+  /* height: 20px; */
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
 }
 </style>

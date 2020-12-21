@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import api from '../services/todos.js'
-import callTime from '../libs/setdatetime'
+import moment from 'moment'
 
 const storeData = {
   state: {
@@ -16,7 +16,7 @@ const storeData = {
       }
     },
     async puttodoRequest({ commit }, data) {
-      const liveDate = callTime.datetime()
+      const liveDate = moment().format('DD/MM/YYYY H:mm:ss')
       const putdata = {
         id: data.id,
         create_time: liveDate,
@@ -50,7 +50,7 @@ const storeData = {
       }
     },
     async addtaskRequest({ commit }, data) {
-      const liveDate = callTime.datetime()
+      const liveDate = moment().format('DD/MM/YYYY H:mm:ss')
       const addData = {
         task: data,
         create_time: liveDate,
@@ -64,8 +64,13 @@ const storeData = {
         console.log(error)
       }
     },
+
     checkAll({ commit }, data) {
+      // const result = await api.putTodo(data)
       commit('CHECK_ALL', data)
+    },
+    delAllTask({ commit }, data) {
+      commit('DEL_ALL_TASK', data)
     }
   },
   mutations: {
@@ -94,6 +99,9 @@ const storeData = {
           todo.completed = true
         })
       }
+    },
+    DEL_ALL_TASK(state) {
+      state.todos = []
     }
   },
   modules: {}
