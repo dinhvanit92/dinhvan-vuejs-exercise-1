@@ -21,7 +21,9 @@
               type="checkbox"
               :checked="todo.completed"
               @click="todo.completed = !todo.completed"
-              @change="completeRequest([todo.id, todo.completed])"
+              @change="
+                completeRequest({ id: todo.id, completed: todo.completed })
+              "
             />
             <p>{{ todo.create_time }}</p>
           </div>
@@ -37,7 +39,8 @@
               src="../assets/checked.png"
               alt=""
               @click="
-                ;(todo.edit = !todo.edit), puttodoRequest([todo.id, todo.task])
+                ;(todo.edit = !todo.edit),
+                  puttodoRequest({ id: todo.id, task: todo.task })
               "
               v-else
             />
@@ -54,8 +57,8 @@
           class="form-control"
           type="textarea"
           v-model="todo.task"
-          @keyup.enter="puttodoRequest([todo.id, todo.task])"
-          @change="puttodoRequest([todo.id, todo.task])"
+          @keyup.enter="puttodoRequest({ id: todo.id, task: todo.task })"
+          @change="puttodoRequest({ id: todo.id, task: todo.task })"
         />
       </li>
     </ul>
@@ -107,18 +110,6 @@ export default {
       'completeRequest',
       'checkAll'
     ])
-    // check(data) {
-    //   let newdata = this.$store.state.todos
-    //   console.log(data)
-    //   if (data == 1) {
-    //     newdata = newdata.map((todo) => todo.id)
-    //   } else if (data == 2) {
-    //     newdata = newdata.map((todo) => todo.completed == false)
-    //   } else {
-    //     newdata = newdata.map((todo) => todo.completed == true)
-    //   }
-    //   return newdata
-    // }
   },
   mounted() {
     this.gettodoRequest()

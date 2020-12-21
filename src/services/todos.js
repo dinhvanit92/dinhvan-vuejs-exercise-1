@@ -11,14 +11,12 @@ async function putTodo(id, data) {
     'https://5fd988e77e05f000170d3a94.mockapi.io/todos/' + id,
     data
   )
-  // return getTodo()
   return result.data
 }
 async function deleteTodo(id) {
   const result = await axios.delete(
     'https://5fd988e77e05f000170d3a94.mockapi.io/todos/' + id
   )
-  // return getTodo()
   return result.data
 }
 async function postTodo(data) {

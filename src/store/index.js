@@ -6,12 +6,6 @@ const storeData = {
   state: {
     todos: []
   },
-  // getters: {
-  //   all: (state) => state.todos.filter((todo) => todo.id),
-  //   completed: (state) => state.todos.filter((todo) => todo.completed == true),
-  //   uncompleted: (state) =>
-  //     state.todos.filter((todo) => todo.completed == false)
-  // },
   actions: {
     async gettodoRequest({ commit }) {
       try {
@@ -24,13 +18,13 @@ const storeData = {
     async puttodoRequest({ commit }, data) {
       const liveDate = callTime.datetime()
       const putdata = {
-        id: data[0],
+        id: data.id,
         create_time: liveDate,
-        task: data[1],
+        task: data.task,
         edit: false
       }
       try {
-        const result = await api.putTodo(data[0], putdata)
+        const result = await api.putTodo(data.id, putdata)
         commit('PUT_TODOS', result)
       } catch (error) {
         console.log(error)
@@ -45,12 +39,11 @@ const storeData = {
       }
     },
     async completeRequest({ commit }, data) {
-      console.log('data[1]', data[1])
       const putdata = {
-        completed: data[1]
+        completed: data.completed
       }
       try {
-        const result = await api.putTodo(data[0], putdata)
+        const result = await api.putTodo(data.id, putdata)
         commit('PUT_TODOS', result)
       } catch (error) {
         console.log(error)
