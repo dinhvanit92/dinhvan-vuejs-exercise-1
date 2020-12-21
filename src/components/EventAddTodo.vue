@@ -41,6 +41,7 @@ export default {
   min-height: 50px;
   padding-left: 10px;
   border: 1px solid rgba(51, 51, 51, 0.131);
+  border-radius: 5px;
 }
 input {
   border: 1px solid rgba(51, 51, 51, 0.131);

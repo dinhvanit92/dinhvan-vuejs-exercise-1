@@ -1,9 +1,13 @@
 <template>
   <div class="event-show">
     <ul>
-      <li @click="listcheck = 1">All</li>
-      <li @click="listcheck = 2">Uncompleted</li>
-      <li @click="listcheck = 3">Completed</li>
+      <li @click="listcheck = 1" :class="{ cl1: listcheck == 1 }">All</li>
+      <li @click="listcheck = 2" :class="{ cl2: listcheck == 2 }">
+        Uncompleted
+      </li>
+      <li @click="listcheck = 3" :class="{ cl3: listcheck == 3 }">
+        Completed
+      </li>
     </ul>
   </div>
   <div class="event">
@@ -71,7 +75,11 @@
         @click="checkAll((check = true))"
         :disabled="check"
       /><label for="checkall" class="texclass">Mark all as completed</label>
-      <button class="btnDel" v-if="check && newtodos.length" @click="delAllTask()">
+      <button
+        class="btnDel"
+        v-if="check && newtodos.length"
+        @click="delAllTask()"
+      >
         DELETE COMPLETED ({{ newtodos.length }})
       </button>
     </div>
@@ -164,12 +172,15 @@ export default {
   padding-left: 3px;
   padding-top: 2px;
   font-size: 15px;
+  border-radius: 5px;
 }
 input:focus {
-  border: 1px solid rgb(7, 175, 253);
+  border: 1px solid rgb(68, 130, 255);
+  border-radius: 5px;
 }
 input:hover {
-  border: 1px solid rgb(7, 175, 253);
+  border: 1px solid rgb(68, 130, 255);
+  border-radius: 5px;
 }
 
 .event-show {
@@ -206,12 +217,17 @@ input:hover {
   margin: 0px 10px;
 }
 .btnDel {
-  background-color: #4482ff;
+  background-color: rgb(68, 130, 255);
   width: 200px;
   /* height: 20px; */
   border: none;
   color: white;
   padding: 10px;
   cursor: pointer;
+}
+.cl1,
+.cl2,
+.cl3 {
+  color: rgb(68, 130, 255);
 }
 </style>
